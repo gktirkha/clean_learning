@@ -12,7 +12,7 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {
     log(
-      'an event Happened in ${bloc.runtimeType} the event is ${event.runtimeType}',
+      'Event in ${bloc.runtimeType} \n Current State: ${bloc.state} \n Event Type: ${event.runtimeType} \n Event Data: $event',
       name: 'BlocObserver',
     );
     super.onEvent(bloc, event);
@@ -21,7 +21,7 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onTransition(Bloc bloc, Transition transition) {
     log(
-      'There was a transition from ${transition.currentState.runtimeType} to ${transition.nextState.runtimeType} in ${bloc.runtimeType}',
+      'Transition in ${bloc.runtimeType} \n Current State Type: ${transition.currentState.runtimeType} \n Next State Type: ${transition.nextState.runtimeType} \n Details: $transition',
       name: 'BlocObserver',
     );
     super.onTransition(bloc, transition);
@@ -30,7 +30,7 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
     log(
-      'Error happened in ${bloc.runtimeType} with error ${error.runtimeType} and the stacktrace is $stackTrace',
+      'Error in ${bloc.runtimeType} \n Error Type: ${error.runtimeType} \n Error Data: $error \n StackTrace: $stackTrace',
       name: 'BlocObserver',
     );
     super.onError(bloc, error, stackTrace);
@@ -45,7 +45,7 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     log(
-      'Change on ${bloc.runtimeType} from ${change.currentState.runtimeType} to ${change.nextState.runtimeType}',
+      'Change in ${bloc.runtimeType} \n Current State Type: ${change.currentState.runtimeType} \n Next State Type: ${change.nextState.runtimeType} \n Details: $change',
       name: 'BlocObserver',
     );
     super.onChange(bloc, change);
