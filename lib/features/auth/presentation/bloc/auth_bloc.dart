@@ -20,6 +20,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   late UserSignUpUseCase _userSignUpUseCase;
 
   FutureOr<void> _signUp(_SignUp event, Emitter<AuthState> emit) async {
+    emit(const _Loading());
     final result = await _userSignUpUseCase(
       UserSignUpUseCaseParams(
         name: event.name,

@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../logger/current_function_name.dart';
+import 'current_function_name.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override

@@ -20,6 +20,7 @@ sealed class AppTheme {
           enabledBorder: _inputBorder(),
           focusedBorder: _inputBorder(color: AppPalette.gradient2),
           errorBorder: _inputBorder(color: AppPalette.errorColor),
+          focusedErrorBorder: _inputBorder(),
         ),
         appBarTheme: const AppBarTheme(
           backgroundColor: AppPalette.backgroundColor,
