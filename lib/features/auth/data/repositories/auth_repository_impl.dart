@@ -1,8 +1,8 @@
 import 'package:fpdart/fpdart.dart';
 
+import '../../../../core/common/entities/user_entity/user_entity.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/exceptions/exceptions.dart';
-import '../../domain/entities/user_entity/user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../data_sources/auth_remote_data_source.dart';
 

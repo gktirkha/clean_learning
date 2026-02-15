@@ -1,7 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../../core/common/entities/user_entity/user_entity.dart';
 import '../../../../core/exceptions/exceptions.dart';
-import '../../domain/entities/user_entity/user_entity.dart';
 import '../model/user_model/user_model.dart';
 
 abstract interface class AuthRemoteDataSource {

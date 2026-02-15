@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../core/common/cubits/app_user_cubit/app_user_cubit.dart';
+import '../../../../core/common/entities/user_entity/user_entity.dart';
 import '../../../../core/use_case/use_case.dart';
 import '../../../../core/utils/snack_bar_utils.dart';
-import '../../domain/entities/user_entity/user_entity.dart';
 import '../../domain/use_cases/current_user_use_case.dart';
 import '../../domain/use_cases/user_sign_in_use_case.dart';
 import '../../domain/use_cases/user_sign_up_use_case.dart';
@@ -19,9 +20,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required UserSignUpUseCase userSignUpUseCase,
     required UserUseSignInCase userUseSignInCase,
     required CurrentUserUseCase currentUserUseCase,
+    required AppUserCubit appUserCubit,
   }) : _userSignUpUseCase = userSignUpUseCase,
        _userUseSignInCase = userUseSignInCase,
        _currentUserUseCase = currentUserUseCase,
+       _appUserCubit = appUserCubit,
        super(const AuthState.initial()) {
     on<AuthEvent>(_onEvent);
   }
@@ -29,8 +32,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserSignUpUseCase _userSignUpUseCase;
   final UserUseSignInCase _userUseSignInCase;
   final CurrentUserUseCase _currentUserUseCase;
+  final AppUserCubit _appUserCubit;
 
   Future<void> _onEvent(AuthEvent event, Emitter<AuthState> emit) async {
+    emit(const .loading());
     await event.when(
       started: () async {
         emit(const AuthState.initial());
@@ -56,21 +61,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     String password,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthState.loading());
-
     final result = await _userSignUpUseCase(
       UserSignUpUseCaseParams(name: name, email: email, password: password),
     );
 
-    result.fold(
-      (failure) {
-        emit(AuthState.failure(message: failure.message));
-        showAppSnackBar(failure.message);
-      },
-      (user) {
-        emit(AuthState.success(user: user));
-      },
-    );
+    result.fold((failure) {
+      emit(.failure(message: failure.message));
+      showAppSnackBar(failure.message);
+    }, (user) => _emitAuthSuccess(user, emit));
   }
 
   Future<void> _signIn(
@@ -78,35 +76,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     String password,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthState.loading());
-
     final result = await _userUseSignInCase(
       UserSignInCaseParams(email: email, password: password),
     );
 
-    result.fold(
-      (failure) {
-        emit(AuthState.failure(message: failure.message));
-        showAppSnackBar(failure.message);
-      },
-      (user) {
-        emit(AuthState.success(user: user));
-      },
-    );
+    result.fold((failure) {
+      emit(.failure(message: failure.message));
+      showAppSnackBar(failure.message);
+    }, (user) => _emitAuthSuccess(user, emit));
   }
 
   Future<void> _checkCurrentUser(Emitter<AuthState> emit) async {
-    emit(const AuthState.loading());
-
     final result = await _currentUserUseCase(NoParams());
 
-    result.fold(
-      (failure) {
-        emit(const AuthState.initial());
-      },
-      (user) {
-        emit(AuthState.success(user: user));
-      },
-    );
+    result.fold((failure) {
+      emit(const .initial());
+    }, (user) => _emitAuthSuccess(user, emit));
+  }
+
+  void _emitAuthSuccess(UserEntity user, Emitter<AuthState> emit) {
+    _appUserCubit.updateUser(user);
+    emit(.success(user: user));
   }
 }

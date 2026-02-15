@@ -1,5 +1,5 @@
+import '../../../../core/common/entities/user_entity/user_entity.dart';
 import '../../../../core/error/failures.dart';
-import '../entities/user_entity/user_entity.dart';
 
 abstract interface class AuthRepository {
   Future<FailableEither<UserEntity>> signupWithEmailAndPassword({

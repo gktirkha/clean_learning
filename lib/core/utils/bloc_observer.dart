@@ -2,12 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'current_function_name.dart';
-
 class AppBlocObserver extends BlocObserver {
   @override
   void onCreate(BlocBase bloc) {
-    log('${bloc.runtimeType} Created', name: getCurrentFunctionName());
+    log('${bloc.runtimeType} Created', name: 'BlocObserver');
     super.onCreate(bloc);
   }
 
@@ -15,7 +13,7 @@ class AppBlocObserver extends BlocObserver {
   void onEvent(Bloc bloc, Object? event) {
     log(
       'an event Happened in ${bloc.runtimeType} the event is ${event.runtimeType}',
-      name: getCurrentFunctionName(),
+      name: 'BlocObserver',
     );
     super.onEvent(bloc, event);
   }
@@ -24,7 +22,7 @@ class AppBlocObserver extends BlocObserver {
   void onTransition(Bloc bloc, Transition transition) {
     log(
       'There was a transition from ${transition.currentState.runtimeType} to ${transition.nextState.runtimeType}',
-      name: getCurrentFunctionName(),
+      name: 'BlocObserver',
     );
     super.onTransition(bloc, transition);
   }
@@ -33,14 +31,14 @@ class AppBlocObserver extends BlocObserver {
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
     log(
       'Error happened in ${bloc.runtimeType} with error ${error.runtimeType} and the stacktrace is $stackTrace',
-      name: getCurrentFunctionName(),
+      name: 'BlocObserver',
     );
     super.onError(bloc, error, stackTrace);
   }
 
   @override
   void onClose(BlocBase bloc) {
-    log('${bloc.runtimeType} is closed', name: getCurrentFunctionName());
+    log('${bloc.runtimeType} is closed', name: 'BlocObserver');
     super.onClose(bloc);
   }
 
@@ -48,7 +46,7 @@ class AppBlocObserver extends BlocObserver {
   void onChange(BlocBase bloc, Change change) {
     log(
       'Change on ${bloc.runtimeType} from ${change.currentState.runtimeType} to ${change.nextState.runtimeType}',
-      name: getCurrentFunctionName(),
+      name: 'BlocObserver',
     );
     super.onChange(bloc, change);
   }
