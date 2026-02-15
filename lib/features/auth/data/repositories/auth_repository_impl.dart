@@ -5,11 +5,14 @@ import '../../../../core/common/entities/user_entity/user_entity.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/exceptions/exceptions.dart';
 import '../../domain/repositories/auth_repository.dart';
-import '../data_sources/auth_remote_data_source.dart';
+import '../data_sources/auth_remote_data_source/auth_remote_data_source.dart';
+import '../data_sources/auth_remote_data_source/auth_remote_data_source_types.dart';
 
 @Injectable(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl(this.remoteDataSource);
+  AuthRepositoryImpl(
+    @Named(AuthRemoteDataSourceTypes.mock) this.remoteDataSource,
+  );
   final AuthRemoteDataSource remoteDataSource;
 
   @override

@@ -13,8 +13,12 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
 
-import '../../features/auth/data/data_sources/auth_remote_data_source.dart'
-    as _i25;
+import '../../features/auth/data/data_sources/auth_remote_data_source/auth_remote_data_source.dart'
+    as _i130;
+import '../../features/auth/data/data_sources/auth_remote_data_source/mock_auth_remote_data_source.dart'
+    as _i101;
+import '../../features/auth/data/data_sources/auth_remote_data_source/supabase_remote_data_source.dart'
+    as _i188;
 import '../../features/auth/data/repositories/auth_repository_impl.dart'
     as _i153;
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i787;
@@ -39,14 +43,18 @@ extension GetItInjectableX on _i174.GetIt {
     final blogAppModule = _$BlogAppModule();
     gh.singleton<_i978.AppUserCubit>(() => _i978.AppUserCubit());
     gh.lazySingleton<_i454.SupabaseClient>(() => blogAppModule.supabaseClient);
-    gh.factory<_i25.AuthRemoteDataSource>(
-      () => _i25.SupabaseRemoteDataSource(gh<_i454.SupabaseClient>()),
+    gh.factory<_i130.AuthRemoteDataSource>(
+      () => _i101.MockAuthRemoteDataSource(),
+      instanceName: 'mock',
+    );
+    gh.factory<_i130.AuthRemoteDataSource>(
+      () => _i188.SupabaseRemoteDataSource(gh<_i454.SupabaseClient>()),
+      instanceName: 'supabase',
     );
     gh.factory<_i787.AuthRepository>(
-      () => _i153.AuthRepositoryImpl(gh<_i25.AuthRemoteDataSource>()),
-    );
-    gh.factory<_i410.CurrentUserUseCase>(
-      () => _i410.CurrentUserUseCase(gh<_i787.AuthRepository>()),
+      () => _i153.AuthRepositoryImpl(
+        gh<_i130.AuthRemoteDataSource>(instanceName: 'mock'),
+      ),
     );
     gh.factory<_i597.UserLogoutCase>(
       () => _i597.UserLogoutCase(gh<_i787.AuthRepository>()),
@@ -56,6 +64,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i702.UserSignUpUseCase>(
       () => _i702.UserSignUpUseCase(gh<_i787.AuthRepository>()),
+    );
+    gh.factory<_i410.CurrentUserUseCase>(
+      () => _i410.CurrentUserUseCase(gh<_i787.AuthRepository>()),
     );
     gh.lazySingleton<_i797.AuthBloc>(
       () => _i797.AuthBloc(

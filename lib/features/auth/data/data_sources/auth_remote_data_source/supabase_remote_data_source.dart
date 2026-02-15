@@ -1,25 +1,13 @@
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../../../core/common/entities/user_entity/user_entity.dart';
-import '../../../../core/exceptions/exceptions.dart';
-import '../model/user_model/user_model.dart';
+import '../../../../../core/common/entities/user_entity/user_entity.dart';
+import '../../../../../core/exceptions/exceptions.dart';
+import '../../model/user_model/user_model.dart';
+import 'auth_remote_data_source.dart';
+import 'auth_remote_data_source_types.dart';
 
-abstract interface class AuthRemoteDataSource {
-  Future<UserEntity> signupWithEmailPassword({
-    required String name,
-    required String email,
-    required String password,
-  });
-  Future<UserEntity> signinWithEmailPassword({
-    required String email,
-    required String password,
-  });
-  Session? get session;
-  Future<UserEntity?> getUserData();
-  Future<void> logout();
-}
-
+@Named(AuthRemoteDataSourceTypes.supabase)
 @Injectable(as: AuthRemoteDataSource)
 class SupabaseRemoteDataSource implements AuthRemoteDataSource {
   SupabaseRemoteDataSource(this.supabaseClient);
