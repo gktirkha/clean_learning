@@ -8,10 +8,10 @@ import '../../../../core/common/cubits/app_user_cubit/app_user_cubit.dart';
 import '../../../../core/common/entities/user_entity/user_entity.dart';
 import '../../../../core/use_case/use_case.dart';
 import '../../../../core/utils/snack_bar_utils.dart';
-import '../../domain/use_cases/current_user_use_case.dart';
-import '../../domain/use_cases/user_logout_case.dart';
-import '../../domain/use_cases/user_sign_in_use_case.dart';
-import '../../domain/use_cases/user_sign_up_use_case.dart';
+import '../../domain/use_cases/get_current_user_use_case.dart';
+import '../../domain/use_cases/logout_user_use_case.dart';
+import '../../domain/use_cases/sign_in_user_use_case.dart';
+import '../../domain/use_cases/sign_up_user_use_case.dart';
 
 part 'auth_bloc.freezed.dart';
 part 'auth_event.dart';
@@ -20,11 +20,11 @@ part 'auth_state.dart';
 @lazySingleton
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({
-    required UserSignUpUseCase userSignUpUseCase,
-    required UserUseSignInCase userUseSignInCase,
-    required CurrentUserUseCase currentUserUseCase,
+    required SignUpUserUseCase userSignUpUseCase,
+    required SignInUserUseCase userUseSignInCase,
+    required GetCurrentUserUseCase currentUserUseCase,
     required AppUserCubit appUserCubit,
-    required UserLogoutCase userLogoutCase,
+    required LogoutUserUseCase userLogoutCase,
   }) : _userSignUpUseCase = userSignUpUseCase,
        _userUseSignInCase = userUseSignInCase,
        _currentUserUseCase = currentUserUseCase,
@@ -34,11 +34,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthEvent>(_onEvent);
   }
 
-  final UserSignUpUseCase _userSignUpUseCase;
-  final UserUseSignInCase _userUseSignInCase;
-  final CurrentUserUseCase _currentUserUseCase;
+  final SignUpUserUseCase _userSignUpUseCase;
+  final SignInUserUseCase _userUseSignInCase;
+  final GetCurrentUserUseCase _currentUserUseCase;
   final AppUserCubit _appUserCubit;
-  final UserLogoutCase _userLogoutCase;
+  final LogoutUserUseCase _userLogoutCase;
 
   Future<void> _onEvent(AuthEvent event, Emitter<AuthState> emit) async {
     emit(const .loading());
@@ -71,7 +71,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     final result = await _userSignUpUseCase(
-      UserSignUpUseCaseParams(name: name, email: email, password: password),
+      SignUpUserUseCaseParams(name: name, email: email, password: password),
     );
 
     result.fold((failure) {
@@ -86,7 +86,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     final result = await _userUseSignInCase(
-      UserSignInCaseParams(email: email, password: password),
+      SignInUserUseCaseParams(email: email, password: password),
     );
 
     result.fold((failure) {

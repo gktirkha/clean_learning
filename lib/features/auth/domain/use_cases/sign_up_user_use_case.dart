@@ -6,14 +6,14 @@ import '../../../../core/use_case/use_case.dart';
 import '../repositories/auth_repository.dart';
 
 @injectable
-class UserSignUpUseCase
-    implements UseCase<UserEntity, UserSignUpUseCaseParams> {
-  UserSignUpUseCase(this.authRepository);
+class SignUpUserUseCase
+    implements UseCase<UserEntity, SignUpUserUseCaseParams> {
+  SignUpUserUseCase(this.authRepository);
 
   final AuthRepository authRepository;
   @override
   Future<FailableEither<UserEntity>> call(
-    UserSignUpUseCaseParams params,
+    SignUpUserUseCaseParams params,
   ) async {
     return await authRepository.signupWithEmailAndPassword(
       name: params.name,
@@ -23,8 +23,8 @@ class UserSignUpUseCase
   }
 }
 
-class UserSignUpUseCaseParams {
-  UserSignUpUseCaseParams({
+class SignUpUserUseCaseParams {
+  SignUpUserUseCaseParams({
     required this.name,
     required this.email,
     required this.password,

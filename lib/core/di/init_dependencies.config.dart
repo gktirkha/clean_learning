@@ -13,22 +13,23 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
 
-import '../../features/auth/data/data_sources/auth_remote_data_source/auth_remote_data_source.dart'
-    as _i130;
-import '../../features/auth/data/data_sources/auth_remote_data_source/mock_auth_remote_data_source.dart'
-    as _i101;
-import '../../features/auth/data/data_sources/auth_remote_data_source/supabase_remote_data_source.dart'
-    as _i188;
+import '../../features/auth/data/datasources/auth_remote_data_source/auth_remote_data_source.dart'
+    as _i738;
+import '../../features/auth/data/datasources/auth_remote_data_source/mock_auth_remote_data_source.dart'
+    as _i598;
+import '../../features/auth/data/datasources/auth_remote_data_source/supabase_remote_data_source.dart'
+    as _i271;
 import '../../features/auth/data/repositories/auth_repository_impl.dart'
     as _i153;
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i787;
-import '../../features/auth/domain/use_cases/current_user_use_case.dart'
-    as _i410;
-import '../../features/auth/domain/use_cases/user_logout_case.dart' as _i597;
-import '../../features/auth/domain/use_cases/user_sign_in_use_case.dart'
-    as _i397;
-import '../../features/auth/domain/use_cases/user_sign_up_use_case.dart'
-    as _i702;
+import '../../features/auth/domain/use_cases/get_current_user_use_case.dart'
+    as _i129;
+import '../../features/auth/domain/use_cases/logout_user_use_case.dart'
+    as _i699;
+import '../../features/auth/domain/use_cases/sign_in_user_use_case.dart'
+    as _i389;
+import '../../features/auth/domain/use_cases/sign_up_user_use_case.dart'
+    as _i510;
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
 import '../common/cubits/app_user_cubit/app_user_cubit.dart' as _i978;
 import 'blog_app_module.dart' as _i331;
@@ -43,38 +44,38 @@ extension GetItInjectableX on _i174.GetIt {
     final blogAppModule = _$BlogAppModule();
     gh.singleton<_i978.AppUserCubit>(() => _i978.AppUserCubit());
     gh.lazySingleton<_i454.SupabaseClient>(() => blogAppModule.supabaseClient);
-    gh.factory<_i130.AuthRemoteDataSource>(
-      () => _i101.MockAuthRemoteDataSource(),
-      instanceName: 'mock',
-    );
-    gh.factory<_i130.AuthRemoteDataSource>(
-      () => _i188.SupabaseRemoteDataSource(gh<_i454.SupabaseClient>()),
+    gh.factory<_i738.AuthRemoteDataSource>(
+      () => _i271.SupabaseRemoteDataSource(gh<_i454.SupabaseClient>()),
       instanceName: 'supabase',
+    );
+    gh.factory<_i738.AuthRemoteDataSource>(
+      () => _i598.MockAuthRemoteDataSource(),
+      instanceName: 'mock',
     );
     gh.factory<_i787.AuthRepository>(
       () => _i153.AuthRepositoryImpl(
-        gh<_i130.AuthRemoteDataSource>(instanceName: 'mock'),
+        gh<_i738.AuthRemoteDataSource>(instanceName: 'mock'),
       ),
     );
-    gh.factory<_i597.UserLogoutCase>(
-      () => _i597.UserLogoutCase(gh<_i787.AuthRepository>()),
+    gh.factory<_i699.LogoutUserUseCase>(
+      () => _i699.LogoutUserUseCase(gh<_i787.AuthRepository>()),
     );
-    gh.factory<_i397.UserUseSignInCase>(
-      () => _i397.UserUseSignInCase(gh<_i787.AuthRepository>()),
+    gh.factory<_i389.SignInUserUseCase>(
+      () => _i389.SignInUserUseCase(gh<_i787.AuthRepository>()),
     );
-    gh.factory<_i702.UserSignUpUseCase>(
-      () => _i702.UserSignUpUseCase(gh<_i787.AuthRepository>()),
+    gh.factory<_i510.SignUpUserUseCase>(
+      () => _i510.SignUpUserUseCase(gh<_i787.AuthRepository>()),
     );
-    gh.factory<_i410.CurrentUserUseCase>(
-      () => _i410.CurrentUserUseCase(gh<_i787.AuthRepository>()),
+    gh.factory<_i129.GetCurrentUserUseCase>(
+      () => _i129.GetCurrentUserUseCase(gh<_i787.AuthRepository>()),
     );
     gh.lazySingleton<_i797.AuthBloc>(
       () => _i797.AuthBloc(
-        userSignUpUseCase: gh<_i702.UserSignUpUseCase>(),
-        userUseSignInCase: gh<_i397.UserUseSignInCase>(),
-        currentUserUseCase: gh<_i410.CurrentUserUseCase>(),
+        userSignUpUseCase: gh<_i510.SignUpUserUseCase>(),
+        userUseSignInCase: gh<_i389.SignInUserUseCase>(),
+        currentUserUseCase: gh<_i129.GetCurrentUserUseCase>(),
         appUserCubit: gh<_i978.AppUserCubit>(),
-        userLogoutCase: gh<_i597.UserLogoutCase>(),
+        userLogoutCase: gh<_i699.LogoutUserUseCase>(),
       ),
     );
     return this;

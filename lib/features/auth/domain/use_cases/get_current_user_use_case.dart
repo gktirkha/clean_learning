@@ -6,8 +6,8 @@ import '../../../../core/use_case/use_case.dart';
 import '../repositories/auth_repository.dart';
 
 @injectable
-class CurrentUserUseCase implements UseCase<UserEntity?, NoParams> {
-  CurrentUserUseCase(this.repository);
+class GetCurrentUserUseCase implements UseCase<UserEntity?, NoParams> {
+  GetCurrentUserUseCase(this.repository);
 
   final AuthRepository repository;
 

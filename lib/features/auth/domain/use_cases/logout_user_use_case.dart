@@ -6,8 +6,8 @@ import '../../../../core/use_case/use_case.dart';
 import '../repositories/auth_repository.dart';
 
 @injectable
-class UserLogoutCase implements UseCase<void, NoParams> {
-  UserLogoutCase(this.authRepository);
+class LogoutUserUseCase implements UseCase<void, NoParams> {
+  LogoutUserUseCase(this.authRepository);
 
   final AuthRepository authRepository;
 

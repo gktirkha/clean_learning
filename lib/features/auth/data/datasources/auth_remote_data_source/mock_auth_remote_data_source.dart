@@ -3,7 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../../core/common/entities/user_entity/user_entity.dart';
 import '../../../../../core/exceptions/exceptions.dart';
-import '../../model/user_model/user_model.dart';
+import '../../models/user_model/user_model.dart';
 import 'auth_remote_data_source.dart';
 import 'auth_remote_data_source_types.dart';
 
