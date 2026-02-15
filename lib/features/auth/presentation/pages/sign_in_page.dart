@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../app/app_routes.dart';
 import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/theme/app_palette.dart';
 import '../bloc/auth_bloc.dart';
 import '../widgets/auth_field.dart';
 import '../widgets/auth_gradient_button.dart';
-import 'signup_page.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
-
-  static String get route => '/sign-in';
 
   @override
   State<SignInPage> createState() => _SignInPageState();
@@ -77,7 +75,7 @@ class _SignInPageState extends State<SignInPage> {
                     const SizedBox(height: 5),
                     GestureDetector(
                       onTap: () {
-                        context.push(SignupPage.route);
+                        context.go(AppRoutes.signUp);
                       },
                       child: Text.rich(
                         TextSpan(

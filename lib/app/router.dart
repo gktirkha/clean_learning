@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../core/common/cubits/app_user_cubit/app_user_cubit.dart';
 import '../features/auth/presentation/pages/sign_in_page.dart';
 import '../features/auth/presentation/pages/signup_page.dart';
+import 'app_routes.dart';
 import 'router_refresh.dart';
 
 class AppRouter {
@@ -23,14 +24,12 @@ class AppRouter {
       ),
 
       GoRoute(
-        path: SignInPage.route,
-        name: 'signIn',
+        path: AppRoutes.signIn,
         builder: (context, state) => const SignInPage(),
       ),
 
       GoRoute(
-        path: SignupPage.route,
-        name: 'signUp',
+        path: AppRoutes.signUp,
         builder: (context, state) => const SignupPage(),
       ),
     ],
@@ -39,11 +38,11 @@ class AppRouter {
       final isLoggedIn = appUserCubit.state is UserLoggedIn;
 
       final isAuthRoute =
-          state.matchedLocation == SignInPage.route ||
-          state.matchedLocation == SignupPage.route;
+          state.matchedLocation == AppRoutes.signIn ||
+          state.matchedLocation == AppRoutes.signUp;
 
       if (!isLoggedIn && !isAuthRoute) {
-        return SignInPage.route;
+        return AppRoutes.signIn;
       }
 
       if (isLoggedIn && isAuthRoute) {
