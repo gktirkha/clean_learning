@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../core/use_case/use_case.dart';
 import '../../../../core/utils/snack_bar_utils.dart';
 import '../../domain/entities/user_entity/user_entity.dart';
-import '../../domain/use_cases/user_sign_in_case.dart';
+import '../../domain/use_cases/current_user_use_case.dart';
+import '../../domain/use_cases/user_sign_in_use_case.dart';
 import '../../domain/use_cases/user_sign_up_use_case.dart';
 
 part 'auth_bloc.freezed.dart';
@@ -15,49 +17,95 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({
     required UserSignUpUseCase userSignUpUseCase,
-    required UserSignInCase userSignInCase,
-  }) : super(const _Initial()) {
-    _userSignUpUseCase = userSignUpUseCase;
-    _userSignInCase = userSignInCase;
-    on<_SignUp>(_signUp);
-    on<_SignIn>(_signIn);
+    required UserUseSignInCase userUseSignInCase,
+    required CurrentUserUseCase currentUserUseCase,
+  }) : _userSignUpUseCase = userSignUpUseCase,
+       _userUseSignInCase = userUseSignInCase,
+       _currentUserUseCase = currentUserUseCase,
+       super(const AuthState.initial()) {
+    on<AuthEvent>(_onEvent);
   }
 
-  late final UserSignUpUseCase _userSignUpUseCase;
-  late final UserSignInCase _userSignInCase;
+  final UserSignUpUseCase _userSignUpUseCase;
+  final UserUseSignInCase _userUseSignInCase;
+  final CurrentUserUseCase _currentUserUseCase;
 
-  FutureOr<void> _signUp(_SignUp event, Emitter<AuthState> emit) async {
-    emit(const _Loading());
+  Future<void> _onEvent(AuthEvent event, Emitter<AuthState> emit) async {
+    await event.when(
+      started: () async {
+        emit(const AuthState.initial());
+      },
+
+      signup: (name, email, password) async {
+        await _signUp(name, email, password, emit);
+      },
+
+      signIn: (email, password) async {
+        await _signIn(email, password, emit);
+      },
+
+      isLoggedIn: () async {
+        await _checkCurrentUser(emit);
+      },
+    );
+  }
+
+  Future<void> _signUp(
+    String name,
+    String email,
+    String password,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthState.loading());
+
     final result = await _userSignUpUseCase(
-      UserSignUpUseCaseParams(
-        name: event.name,
-        email: event.email,
-        password: event.password,
-      ),
+      UserSignUpUseCaseParams(name: name, email: email, password: password),
     );
+
     result.fold(
-      (l) {
-        emit(_Failure(message: l.message));
-        showAppSnackBar(l.message);
+      (failure) {
+        emit(AuthState.failure(message: failure.message));
+        showAppSnackBar(failure.message);
       },
-      (r) {
-        emit(_Success(user: r));
+      (user) {
+        emit(AuthState.success(user: user));
       },
     );
   }
 
-  FutureOr<void> _signIn(_SignIn event, Emitter<AuthState> emit) async {
-    emit(const _Loading());
-    final result = await _userSignInCase(
-      UserSignInCaseParams(email: event.email, password: event.password),
+  Future<void> _signIn(
+    String email,
+    String password,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(const AuthState.loading());
+
+    final result = await _userUseSignInCase(
+      UserSignInCaseParams(email: email, password: password),
     );
+
     result.fold(
-      (l) {
-        emit(_Failure(message: l.message));
-        showAppSnackBar(l.message);
+      (failure) {
+        emit(AuthState.failure(message: failure.message));
+        showAppSnackBar(failure.message);
       },
-      (r) {
-        emit(_Success(user: r));
+      (user) {
+        emit(AuthState.success(user: user));
+      },
+    );
+  }
+
+  Future<void> _checkCurrentUser(Emitter<AuthState> emit) async {
+    emit(const AuthState.loading());
+
+    final result = await _currentUserUseCase(NoParams());
+
+    result.fold(
+      (failure) {
+        emit(const AuthState.initial());
+      },
+      (user) {
+        emit(AuthState.success(user: user));
       },
     );
   }

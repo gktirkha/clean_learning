@@ -87,7 +87,9 @@ class SupabaseRemoteDataSource implements AuthRemoteDataSource {
                       .eq('id', session!.user.id))
                   .first;
 
-          return UserModel.fromJson(data);
+          return UserModel.fromJson(
+            data,
+          ).copyWith(email: session?.user.email ?? 'No Email Found');
         }
         return null;
       }

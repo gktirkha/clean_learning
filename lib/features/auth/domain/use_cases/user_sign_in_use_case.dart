@@ -3,8 +3,8 @@ import '../../../../core/use_case/use_case.dart';
 import '../entities/user_entity/user_entity.dart';
 import '../repositories/auth_repository.dart';
 
-class UserSignInCase implements UseCase<UserEntity, UserSignInCaseParams> {
-  UserSignInCase(this.authRepository);
+class UserUseSignInCase implements UseCase<UserEntity, UserSignInCaseParams> {
+  UserUseSignInCase(this.authRepository);
 
   final AuthRepository authRepository;
 
