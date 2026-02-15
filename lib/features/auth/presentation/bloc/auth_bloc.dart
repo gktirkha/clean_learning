@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../core/common/cubits/app_user_cubit/app_user_cubit.dart';
+import '../../../../app/state/app_user_cubit/app_user_cubit.dart';
 import '../../../../core/common/entities/user_entity/user_entity.dart';
 import '../../../../core/use_case/use_case.dart';
 import '../../../../core/utils/snack_bar_utils.dart';
