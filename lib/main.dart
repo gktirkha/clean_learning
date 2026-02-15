@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/theme/theme.dart';
+import 'core/utils/snack_bar_utils.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/auth/presentation/pages/sign_in_page.dart';
 import 'init_dependencies.dart';
@@ -24,6 +25,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scaffoldMessengerKey: scaffoldKey,
       theme: AppTheme.darkTheme,
       title: 'Blog App',
       debugShowCheckedModeBanner: false,

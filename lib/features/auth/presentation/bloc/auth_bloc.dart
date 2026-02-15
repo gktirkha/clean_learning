@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../core/utils/snack_bar_utils.dart';
 import '../../domain/entities/user_entity/user_entity.dart';
 import '../../domain/use_cases/user_sign_up_use_case.dart';
 
@@ -31,6 +32,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     result.fold(
       (l) {
         emit(_Failure(message: l.message));
+        showAppSnackBar(l.message);
       },
       (r) {
         emit(_Success(uid: r));
