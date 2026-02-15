@@ -53,11 +53,16 @@ class SupabaseRemoteDataSource implements AuthRemoteDataSource {
     try {
       final response = await fn();
 
-      if (response.user == null) {
+      final user = response.user;
+      if (user == null) {
         throw ServerException('User is null');
       }
 
-      return UserModel.fromJson(response.user!.toJson());
+      return UserModel(
+        id: user.id,
+        email: user.email ?? 'Email Not Found',
+        name: response.user?.userMetadata?['name'] ?? 'Name Not Found',
+      );
     } on AuthException catch (e) {
       throw ServerException(e.message);
     } catch (e) {

@@ -8,6 +8,7 @@ import 'core/utils/bloc_observer.dart';
 import 'features/auth/data/data_sources/auth_remote_data_source.dart';
 import 'features/auth/data/repositories/auth_repository_impl.dart';
 import 'features/auth/domain/repositories/auth_repository.dart';
+import 'features/auth/domain/use_cases/user_sign_in_case.dart';
 import 'features/auth/domain/use_cases/user_sign_up_use_case.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 
@@ -32,7 +33,11 @@ void _initAuth() {
     () => AuthRepositoryImpl(serviceLocator()),
   );
   serviceLocator.registerFactory(() => UserSignUpUseCase(serviceLocator()));
+  serviceLocator.registerFactory(() => UserSignInCase(serviceLocator()));
   serviceLocator.registerLazySingleton<AuthBloc>(
-    () => AuthBloc(userSignUpUseCase: serviceLocator()),
+    () => AuthBloc(
+      userSignUpUseCase: serviceLocator(),
+      userSignInCase: serviceLocator(),
+    ),
   );
 }
