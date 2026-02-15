@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../core/common/cubits/app_user_cubit/app_user_cubit.dart';
 import '../../../../core/common/entities/user_entity/user_entity.dart';
 import '../../../../core/use_case/use_case.dart';
 import '../../../../core/utils/snack_bar_utils.dart';
 import '../../domain/use_cases/current_user_use_case.dart';
+import '../../domain/use_cases/user_logout_case.dart';
 import '../../domain/use_cases/user_sign_in_use_case.dart';
 import '../../domain/use_cases/user_sign_up_use_case.dart';
 
@@ -15,16 +17,19 @@ part 'auth_bloc.freezed.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
+@lazySingleton
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({
     required UserSignUpUseCase userSignUpUseCase,
     required UserUseSignInCase userUseSignInCase,
     required CurrentUserUseCase currentUserUseCase,
     required AppUserCubit appUserCubit,
+    required UserLogoutCase userLogoutCase,
   }) : _userSignUpUseCase = userSignUpUseCase,
        _userUseSignInCase = userUseSignInCase,
        _currentUserUseCase = currentUserUseCase,
        _appUserCubit = appUserCubit,
+       _userLogoutCase = userLogoutCase,
        super(const AuthState.initial()) {
     on<AuthEvent>(_onEvent);
   }
@@ -33,6 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserUseSignInCase _userUseSignInCase;
   final CurrentUserUseCase _currentUserUseCase;
   final AppUserCubit _appUserCubit;
+  final UserLogoutCase _userLogoutCase;
 
   Future<void> _onEvent(AuthEvent event, Emitter<AuthState> emit) async {
     emit(const .loading());
@@ -51,6 +57,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       isLoggedIn: () async {
         await _checkCurrentUser(emit);
+      },
+      signOut: () async {
+        await _signOut(emit);
       },
     );
   }
@@ -97,5 +106,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void _emitAuthSuccess(UserEntity user, Emitter<AuthState> emit) {
     _appUserCubit.updateUser(user);
     emit(.success(user: user));
+  }
+
+  Future<void> _signOut(Emitter<AuthState> emit) async {
+    await _userLogoutCase(NoParams());
+
+    _appUserCubit.updateUser(null);
+    emit(const .initial());
   }
 }

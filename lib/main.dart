@@ -48,7 +48,22 @@ class _MainAppState extends State<MainApp> {
         },
         builder: (context, state) {
           if (state) {
-            return const Scaffold(body: Center(child: Text('Logged In')));
+            return Scaffold(
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: .center,
+                  children: [
+                    const Text('Logged In'),
+                    ElevatedButton(
+                      onPressed: () {
+                        context.read<AuthBloc>().add(const .signOut());
+                      },
+                      child: const Text('Sign Out'),
+                    ),
+                  ],
+                ),
+              ),
+            );
           }
           return const SignInPage();
         },

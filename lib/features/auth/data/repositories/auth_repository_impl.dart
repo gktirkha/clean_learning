@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../core/common/entities/user_entity/user_entity.dart';
 import '../../../../core/error/failures.dart';
@@ -6,6 +7,7 @@ import '../../../../core/exceptions/exceptions.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../data_sources/auth_remote_data_source.dart';
 
+@Injectable(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl(this.remoteDataSource);
   final AuthRemoteDataSource remoteDataSource;
@@ -61,5 +63,10 @@ class AuthRepositoryImpl implements AuthRepository {
     } on ServerException catch (e) {
       return Left(Failure(e.message));
     }
+  }
+
+  @override
+  Future<void> signOut() {
+    return remoteDataSource.logout();
   }
 }

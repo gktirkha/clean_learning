@@ -15,4 +15,5 @@ class AuthEvent with _$AuthEvent {
   }) = _SignIn;
 
   const factory AuthEvent.isLoggedIn() = _LoggedIn;
+  const factory AuthEvent.signOut() = _SignOut;
 }

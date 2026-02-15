@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../core/common/entities/user_entity/user_entity.dart';
@@ -16,8 +17,10 @@ abstract interface class AuthRemoteDataSource {
   });
   Session? get session;
   Future<UserEntity?> getUserData();
+  Future<void> logout();
 }
 
+@Injectable(as: AuthRemoteDataSource)
 class SupabaseRemoteDataSource implements AuthRemoteDataSource {
   SupabaseRemoteDataSource(this.supabaseClient);
 
@@ -98,5 +101,10 @@ class SupabaseRemoteDataSource implements AuthRemoteDataSource {
     } catch (e) {
       return null;
     }
+  }
+
+  @override
+  Future<void> logout() async {
+    return await supabaseClient.auth.signOut();
   }
 }
