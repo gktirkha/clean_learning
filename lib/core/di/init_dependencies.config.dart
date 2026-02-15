@@ -21,6 +21,7 @@ import '../../features/auth/data/datasources/auth_remote_data_source/supabase_re
     as _i271;
 import '../../features/auth/data/repositories/auth_repository_impl.dart'
     as _i153;
+import '../../features/auth/di/auth_module.dart' as _i433;
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i787;
 import '../../features/auth/domain/use_cases/get_current_user_use_case.dart'
     as _i129;
@@ -32,7 +33,6 @@ import '../../features/auth/domain/use_cases/sign_up_user_use_case.dart'
     as _i510;
 import '../../features/auth/presentation/bloc/auth_bloc.dart' as _i797;
 import '../common/cubits/app_user_cubit/app_user_cubit.dart' as _i978;
-import 'blog_app_module.dart' as _i331;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -41,9 +41,9 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    final blogAppModule = _$BlogAppModule();
+    final authModule = _$AuthModule();
     gh.singleton<_i978.AppUserCubit>(() => _i978.AppUserCubit());
-    gh.lazySingleton<_i454.SupabaseClient>(() => blogAppModule.supabaseClient);
+    gh.lazySingleton<_i454.SupabaseClient>(() => authModule.supabaseClient);
     gh.factory<_i738.AuthRemoteDataSource>(
       () => _i271.SupabaseRemoteDataSource(gh<_i454.SupabaseClient>()),
       instanceName: 'supabase',
@@ -82,4 +82,4 @@ extension GetItInjectableX on _i174.GetIt {
   }
 }
 
-class _$BlogAppModule extends _i331.BlogAppModule {}
+class _$AuthModule extends _i433.AuthModule {}

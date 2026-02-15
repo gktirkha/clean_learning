@@ -6,7 +6,7 @@ import '../core/di/di_container.dart';
 import '../core/theme/theme.dart';
 import '../core/utils/snack_bar_utils.dart';
 import '../features/auth/presentation/bloc/auth_bloc.dart';
-import 'router.dart';
+import 'app_router.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

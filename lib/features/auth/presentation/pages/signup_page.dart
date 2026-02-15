@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart' show GoRouterHelper;
 
-import '../../../../app/app_routes.dart';
 import '../../../../core/common/widgets/loader.dart';
 import '../../../../core/theme/app_palette.dart';
+import '../../routes/auth_routes.dart';
 import '../bloc/auth_bloc.dart';
 import '../widgets/auth_field.dart';
 import '../widgets/auth_gradient_button.dart';
@@ -79,7 +79,7 @@ class _SignupPageState extends State<SignupPage> {
                     const SizedBox(height: 5),
                     GestureDetector(
                       onTap: () {
-                        context.go(AppRoutes.signIn);
+                        context.go(AuthRoutes.signIn);
                       },
                       child: Text.rich(
                         TextSpan(
