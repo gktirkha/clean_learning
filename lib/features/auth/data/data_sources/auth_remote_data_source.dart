@@ -1,14 +1,15 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../core/exceptions/exceptions.dart';
+import '../../domain/entities/user_entity/user_entity.dart';
 
 abstract interface class AuthRemoteDataSource {
-  Future<String> signupWithEmailPassword({
+  Future<UserEntity> signupWithEmailPassword({
     required String name,
     required String email,
     required String password,
   });
-  Future<String> signinWithEmailPassword({
+  Future<UserEntity> signinWithEmailPassword({
     required String email,
     required String password,
   });
@@ -20,7 +21,7 @@ class SupabaseRemoteDataSource implements AuthRemoteDataSource {
   final SupabaseClient supabaseClient;
 
   @override
-  Future<String> signupWithEmailPassword({
+  Future<UserEntity> signupWithEmailPassword({
     required String name,
     required String email,
     required String password,
@@ -36,7 +37,7 @@ class SupabaseRemoteDataSource implements AuthRemoteDataSource {
         throw ServerException('User is null');
       }
 
-      return response.user!.id;
+      return UserEntity.fromJson(response.user!.toJson());
     } on AuthException catch (e) {
       throw ServerException(e.message);
     } catch (e) {
@@ -45,7 +46,7 @@ class SupabaseRemoteDataSource implements AuthRemoteDataSource {
   }
 
   @override
-  Future<String> signinWithEmailPassword({
+  Future<UserEntity> signinWithEmailPassword({
     required String email,
     required String password,
   }) async {
@@ -59,7 +60,7 @@ class SupabaseRemoteDataSource implements AuthRemoteDataSource {
         throw ServerException('User is null');
       }
 
-      return response.user!.id;
+      return UserEntity.fromJson(response.user!.toJson());
     } on AuthException catch (e) {
       throw ServerException(e.message);
     } catch (e) {

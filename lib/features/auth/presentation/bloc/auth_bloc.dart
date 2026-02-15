@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../domain/entities/user_entity/user_entity.dart';
 import '../../domain/use_cases/user_sign_up_use_case.dart';
 
 part 'auth_bloc.freezed.dart';

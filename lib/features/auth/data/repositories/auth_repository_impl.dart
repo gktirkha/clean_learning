@@ -2,6 +2,7 @@ import 'package:fpdart/fpdart.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/exceptions/exceptions.dart';
+import '../../domain/entities/user_entity/user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../data_sources/auth_remote_data_source.dart';
 
@@ -10,7 +11,7 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
 
   @override
-  Future<FailableEither<String>> signinWithEmailAndPassword({
+  Future<FailableEither<UserEntity>> signinWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -26,7 +27,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<FailableEither<String>> signupWithEmailAndPassword({
+  Future<FailableEither<UserEntity>> signupWithEmailAndPassword({
     required String name,
     required String email,
     required String password,
