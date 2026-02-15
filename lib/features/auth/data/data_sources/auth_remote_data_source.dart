@@ -37,6 +37,8 @@ class SupabaseRemoteDataSource implements AuthRemoteDataSource {
       }
 
       return response.user!.id;
+    } on AuthException catch (e) {
+      throw ServerException(e.message);
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -58,6 +60,8 @@ class SupabaseRemoteDataSource implements AuthRemoteDataSource {
       }
 
       return response.user!.id;
+    } on AuthException catch (e) {
+      throw ServerException(e.message);
     } catch (e) {
       throw ServerException(e.toString());
     }
