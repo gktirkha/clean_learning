@@ -2,6 +2,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../core/exceptions/exceptions.dart';
 import '../../domain/entities/user_entity/user_entity.dart';
+import '../model/user_model/user_model.dart';
 
 abstract interface class AuthRemoteDataSource {
   Future<UserEntity> signupWithEmailPassword({
@@ -37,7 +38,7 @@ class SupabaseRemoteDataSource implements AuthRemoteDataSource {
         throw ServerException('User is null');
       }
 
-      return UserEntity.fromJson(response.user!.toJson());
+      return UserModel.fromJson(response.user!.toJson());
     } on AuthException catch (e) {
       throw ServerException(e.message);
     } catch (e) {
@@ -60,7 +61,7 @@ class SupabaseRemoteDataSource implements AuthRemoteDataSource {
         throw ServerException('User is null');
       }
 
-      return UserEntity.fromJson(response.user!.toJson());
+      return UserModel.fromJson(response.user!.toJson());
     } on AuthException catch (e) {
       throw ServerException(e.message);
     } catch (e) {
