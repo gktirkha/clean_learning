@@ -27,23 +27,13 @@ class SupabaseRemoteDataSource implements AuthRemoteDataSource {
     required String email,
     required String password,
   }) async {
-    try {
-      final response = await supabaseClient.auth.signUp(
+    return _getUser(
+      () async => await supabaseClient.auth.signUp(
         email: email,
         password: password,
         data: {'name': name},
-      );
-
-      if (response.user == null) {
-        throw ServerException('User is null');
-      }
-
-      return UserModel.fromJson(response.user!.toJson());
-    } on AuthException catch (e) {
-      throw ServerException(e.message);
-    } catch (e) {
-      throw ServerException(e.toString());
-    }
+      ),
+    );
   }
 
   @override
@@ -51,11 +41,17 @@ class SupabaseRemoteDataSource implements AuthRemoteDataSource {
     required String email,
     required String password,
   }) async {
-    try {
-      final response = await supabaseClient.auth.signInWithPassword(
+    return _getUser(
+      () async => await supabaseClient.auth.signInWithPassword(
         email: email,
         password: password,
-      );
+      ),
+    );
+  }
+
+  Future<UserEntity> _getUser(Future<AuthResponse> Function() fn) async {
+    try {
+      final response = await fn();
 
       if (response.user == null) {
         throw ServerException('User is null');
