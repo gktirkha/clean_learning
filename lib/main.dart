@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/common/cubits/app_user_cubit/app_user_cubit.dart';
+import 'core/di/di_container.dart';
 import 'core/di/init_dependencies.dart';
 import 'core/theme/theme.dart';
 import 'core/utils/snack_bar_utils.dart';
@@ -13,8 +14,8 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => serviceLocator<AuthBloc>()),
-        BlocProvider(create: (context) => serviceLocator<AppUserCubit>()),
+        BlocProvider(create: (context) => diContainer<AuthBloc>()),
+        BlocProvider(create: (context) => diContainer<AppUserCubit>()),
       ],
       child: const MainApp(),
     ),
