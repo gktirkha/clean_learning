@@ -4,8 +4,8 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'core/secrets/app_secrets.dart';
-import 'core/utils/bloc_observer.dart';
+import '../secrets/app_secrets.dart';
+import '../utils/bloc_observer.dart';
 import 'init_dependencies.config.dart';
 
 final serviceLocator = GetIt.instance;
@@ -19,10 +19,4 @@ Future<void> initDependencies() async {
     anonKey: AppSecrets.supabaseAnon,
   );
   serviceLocator.init();
-}
-
-@module
-abstract class AppModule {
-  @lazySingleton
-  SupabaseClient get supabaseClient => Supabase.instance.client;
 }

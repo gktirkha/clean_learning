@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/common/cubits/app_user_cubit/app_user_cubit.dart';
+import 'core/di/init_dependencies.dart';
 import 'core/theme/theme.dart';
 import 'core/utils/snack_bar_utils.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/auth/presentation/pages/sign_in_page.dart';
-import 'init_dependencies.dart';
 
 void main() async {
   await initDependencies();
