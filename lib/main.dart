@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'core/observers/bloc_observer.dart';
 import 'core/secrets/app_secrets.dart';
 import 'core/theme/theme.dart';
 import 'features/auth/data/data_sources/auth_remote_data_source.dart';
@@ -12,6 +13,7 @@ import 'features/auth/presentation/pages/sign_in_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = AppBlocObserver();
   final supaBase = await Supabase.initialize(
     url: AppSecrets.supabaseUrl,
     anonKey: AppSecrets.supabaseAnon,
