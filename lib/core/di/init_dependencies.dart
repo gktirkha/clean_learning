@@ -8,7 +8,7 @@ import '../utils/bloc_observer.dart';
 import 'di_container.dart';
 import 'init_dependencies.config.dart';
 
-@InjectableInit()
+@InjectableInit(preferRelativeImports: true)
 Future<void> initDependencies() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = AppBlocObserver();
