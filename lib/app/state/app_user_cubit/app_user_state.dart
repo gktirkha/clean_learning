@@ -3,5 +3,5 @@ part of 'app_user_cubit.dart';
 @freezed
 class AppUserState with _$AppUserState {
   const factory AppUserState.initial() = _Initial;
-  const factory AppUserState.loggedIn(UserEntity user) = UserLoggedIn;
+  const factory AppUserState.loggedIn(UserEntity user) = _UserLoggedIn;
 }

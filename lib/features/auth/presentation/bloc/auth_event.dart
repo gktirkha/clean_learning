@@ -14,6 +14,6 @@ class AuthEvent with _$AuthEvent {
     required String password,
   }) = _SignIn;
 
-  const factory AuthEvent.isLoggedIn() = _LoggedIn;
+  const factory AuthEvent.checkLogin() = _CheckLogin;
   const factory AuthEvent.signOut() = _SignOut;
 }

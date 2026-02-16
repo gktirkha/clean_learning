@@ -18,4 +18,7 @@ class AppUserCubit extends Cubit<AppUserState> {
       emit(.loggedIn(user));
     }
   }
+
+  bool get isLoggedIn =>
+      state.maybeWhen(orElse: () => false, loggedIn: (user) => true);
 }

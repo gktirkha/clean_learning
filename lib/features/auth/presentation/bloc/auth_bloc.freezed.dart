@@ -55,13 +55,13 @@ extension AuthEventPatterns on AuthEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _SignUp value)?  signup,TResult Function( _SignIn value)?  signIn,TResult Function( _LoggedIn value)?  isLoggedIn,TResult Function( _SignOut value)?  signOut,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _SignUp value)?  signup,TResult Function( _SignIn value)?  signIn,TResult Function( _CheckLogin value)?  isLoggedIn,TResult Function( _SignOut value)?  signOut,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _SignUp() when signup != null:
 return signup(_that);case _SignIn() when signIn != null:
-return signIn(_that);case _LoggedIn() when isLoggedIn != null:
+return signIn(_that);case _CheckLogin() when isLoggedIn != null:
 return isLoggedIn(_that);case _SignOut() when signOut != null:
 return signOut(_that);case _:
   return orElse();
@@ -81,13 +81,13 @@ return signOut(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _SignUp value)  signup,required TResult Function( _SignIn value)  signIn,required TResult Function( _LoggedIn value)  isLoggedIn,required TResult Function( _SignOut value)  signOut,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _SignUp value)  signup,required TResult Function( _SignIn value)  signIn,required TResult Function( _CheckLogin value)  isLoggedIn,required TResult Function( _SignOut value)  signOut,}){
 final _that = this;
 switch (_that) {
 case _Started():
 return started(_that);case _SignUp():
 return signup(_that);case _SignIn():
-return signIn(_that);case _LoggedIn():
+return signIn(_that);case _CheckLogin():
 return isLoggedIn(_that);case _SignOut():
 return signOut(_that);case _:
   throw StateError('Unexpected subclass');
@@ -106,13 +106,13 @@ return signOut(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _SignUp value)?  signup,TResult? Function( _SignIn value)?  signIn,TResult? Function( _LoggedIn value)?  isLoggedIn,TResult? Function( _SignOut value)?  signOut,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _SignUp value)?  signup,TResult? Function( _SignIn value)?  signIn,TResult? Function( _CheckLogin value)?  isLoggedIn,TResult? Function( _SignOut value)?  signOut,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case _SignUp() when signup != null:
 return signup(_that);case _SignIn() when signIn != null:
-return signIn(_that);case _LoggedIn() when isLoggedIn != null:
+return signIn(_that);case _CheckLogin() when isLoggedIn != null:
 return isLoggedIn(_that);case _SignOut() when signOut != null:
 return signOut(_that);case _:
   return null;
@@ -136,7 +136,7 @@ switch (_that) {
 case _Started() when started != null:
 return started();case _SignUp() when signup != null:
 return signup(_that.name,_that.email,_that.password);case _SignIn() when signIn != null:
-return signIn(_that.email,_that.password);case _LoggedIn() when isLoggedIn != null:
+return signIn(_that.email,_that.password);case _CheckLogin() when isLoggedIn != null:
 return isLoggedIn();case _SignOut() when signOut != null:
 return signOut();case _:
   return orElse();
@@ -161,7 +161,7 @@ switch (_that) {
 case _Started():
 return started();case _SignUp():
 return signup(_that.name,_that.email,_that.password);case _SignIn():
-return signIn(_that.email,_that.password);case _LoggedIn():
+return signIn(_that.email,_that.password);case _CheckLogin():
 return isLoggedIn();case _SignOut():
 return signOut();case _:
   throw StateError('Unexpected subclass');
@@ -185,7 +185,7 @@ switch (_that) {
 case _Started() when started != null:
 return started();case _SignUp() when signup != null:
 return signup(_that.name,_that.email,_that.password);case _SignIn() when signIn != null:
-return signIn(_that.email,_that.password);case _LoggedIn() when isLoggedIn != null:
+return signIn(_that.email,_that.password);case _CheckLogin() when isLoggedIn != null:
 return isLoggedIn();case _SignOut() when signOut != null:
 return signOut();case _:
   return null;
@@ -368,8 +368,8 @@ as String,
 /// @nodoc
 
 
-class _LoggedIn implements AuthEvent {
-  const _LoggedIn();
+class _CheckLogin implements AuthEvent {
+  const _CheckLogin();
   
 
 
@@ -379,7 +379,7 @@ class _LoggedIn implements AuthEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoggedIn);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CheckLogin);
 }
 
 

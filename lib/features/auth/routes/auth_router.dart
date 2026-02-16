@@ -30,7 +30,7 @@ class AuthRouter {
     required GoRouterState state,
   }) {
     final location = state.uri.path;
-    final isLoggedIn = appUserCubit.state is UserLoggedIn;
+    final isLoggedIn = appUserCubit.isLoggedIn;
     final isAuthRoute = _authRoutes.contains(location);
 
     if (!isLoggedIn && !isAuthRoute) {

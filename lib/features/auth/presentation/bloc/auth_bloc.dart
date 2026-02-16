@@ -64,6 +64,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
+  void _emitAuthSuccess(UserEntity user, Emitter<AuthState> emit) {
+    _appUserCubit.updateUser(user);
+    emit(.success(user: user));
+  }
+
   Future<void> _signUp(
     String name,
     String email,
@@ -101,11 +106,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     result.fold((failure) {
       emit(const .initial());
     }, (user) => _emitAuthSuccess(user, emit));
-  }
-
-  void _emitAuthSuccess(UserEntity user, Emitter<AuthState> emit) {
-    _appUserCubit.updateUser(user);
-    emit(.success(user: user));
   }
 
   Future<void> _signOut(Emitter<AuthState> emit) async {

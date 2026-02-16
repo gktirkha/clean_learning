@@ -19,8 +19,7 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) =>
-              diContainer<AuthBloc>()..add(const AuthEvent.isLoggedIn()),
+          create: (_) => diContainer<AuthBloc>()..add(const .checkLogin()),
         ),
         BlocProvider<AppUserCubit>.value(value: appUserCubit),
       ],

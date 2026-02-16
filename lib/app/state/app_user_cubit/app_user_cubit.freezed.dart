@@ -55,11 +55,11 @@ extension AppUserStatePatterns on AppUserState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( UserLoggedIn value)?  loggedIn,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _UserLoggedIn value)?  loggedIn,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
-return initial(_that);case UserLoggedIn() when loggedIn != null:
+return initial(_that);case _UserLoggedIn() when loggedIn != null:
 return loggedIn(_that);case _:
   return orElse();
 
@@ -78,11 +78,11 @@ return loggedIn(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( UserLoggedIn value)  loggedIn,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _UserLoggedIn value)  loggedIn,}){
 final _that = this;
 switch (_that) {
 case _Initial():
-return initial(_that);case UserLoggedIn():
+return initial(_that);case _UserLoggedIn():
 return loggedIn(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -100,11 +100,11 @@ return loggedIn(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( UserLoggedIn value)?  loggedIn,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _UserLoggedIn value)?  loggedIn,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
-return initial(_that);case UserLoggedIn() when loggedIn != null:
+return initial(_that);case _UserLoggedIn() when loggedIn != null:
 return loggedIn(_that);case _:
   return null;
 
@@ -125,7 +125,7 @@ return loggedIn(_that);case _:
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function( UserEntity user)?  loggedIn,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
-return initial();case UserLoggedIn() when loggedIn != null:
+return initial();case _UserLoggedIn() when loggedIn != null:
 return loggedIn(_that.user);case _:
   return orElse();
 
@@ -147,7 +147,7 @@ return loggedIn(_that.user);case _:
 @optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function( UserEntity user)  loggedIn,}) {final _that = this;
 switch (_that) {
 case _Initial():
-return initial();case UserLoggedIn():
+return initial();case _UserLoggedIn():
 return loggedIn(_that.user);case _:
   throw StateError('Unexpected subclass');
 
@@ -168,7 +168,7 @@ return loggedIn(_that.user);case _:
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function( UserEntity user)?  loggedIn,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
-return initial();case UserLoggedIn() when loggedIn != null:
+return initial();case _UserLoggedIn() when loggedIn != null:
 return loggedIn(_that.user);case _:
   return null;
 
@@ -212,8 +212,8 @@ String toString() {
 /// @nodoc
 
 
-class UserLoggedIn implements AppUserState {
-  const UserLoggedIn(this.user);
+class _UserLoggedIn implements AppUserState {
+  const _UserLoggedIn(this.user);
   
 
  final  UserEntity user;
@@ -222,13 +222,13 @@ class UserLoggedIn implements AppUserState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$UserLoggedInCopyWith<UserLoggedIn> get copyWith => _$UserLoggedInCopyWithImpl<UserLoggedIn>(this, _$identity);
+_$UserLoggedInCopyWith<_UserLoggedIn> get copyWith => __$UserLoggedInCopyWithImpl<_UserLoggedIn>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserLoggedIn&&(identical(other.user, user) || other.user == user));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserLoggedIn&&(identical(other.user, user) || other.user == user));
 }
 
 
@@ -244,8 +244,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $UserLoggedInCopyWith<$Res> implements $AppUserStateCopyWith<$Res> {
-  factory $UserLoggedInCopyWith(UserLoggedIn value, $Res Function(UserLoggedIn) _then) = _$UserLoggedInCopyWithImpl;
+abstract mixin class _$UserLoggedInCopyWith<$Res> implements $AppUserStateCopyWith<$Res> {
+  factory _$UserLoggedInCopyWith(_UserLoggedIn value, $Res Function(_UserLoggedIn) _then) = __$UserLoggedInCopyWithImpl;
 @useResult
 $Res call({
  UserEntity user
@@ -256,17 +256,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$UserLoggedInCopyWithImpl<$Res>
-    implements $UserLoggedInCopyWith<$Res> {
-  _$UserLoggedInCopyWithImpl(this._self, this._then);
+class __$UserLoggedInCopyWithImpl<$Res>
+    implements _$UserLoggedInCopyWith<$Res> {
+  __$UserLoggedInCopyWithImpl(this._self, this._then);
 
-  final UserLoggedIn _self;
-  final $Res Function(UserLoggedIn) _then;
+  final _UserLoggedIn _self;
+  final $Res Function(_UserLoggedIn) _then;
 
 /// Create a copy of AppUserState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? user = null,}) {
-  return _then(UserLoggedIn(
+  return _then(_UserLoggedIn(
 null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as UserEntity,
   ));
