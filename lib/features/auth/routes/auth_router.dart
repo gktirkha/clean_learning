@@ -3,12 +3,17 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/app_routes.dart';
 import '../../../app/state/app_user_cubit/app_user_cubit.dart';
+import '../../../core/router/app_feature_router.dart';
 import '../presentation/pages/sign_in_page.dart';
 import '../presentation/pages/signup_page.dart';
 import 'auth_routes.dart';
 
-class AuthRouter {
-  static List<GoRoute> get routes => [
+class AuthRouter implements AppFeatureRouter {
+  AuthRouter(this._appUserCubit);
+
+  final AppUserCubit _appUserCubit;
+  @override
+  List<GoRoute> get routes => [
     GoRoute(
       path: AuthRoutes.signIn,
       builder: (context, state) => const SignInPage(),
@@ -19,25 +24,19 @@ class AuthRouter {
     ),
   ];
 
-  static final List<String> _authRoutes = [
-    AuthRoutes.signIn,
-    AuthRoutes.signUp,
-  ];
+  static const guestOnlyRoutes = [AuthRoutes.signIn, AuthRoutes.signUp];
 
-  static String? redirect({
-    required AppUserCubit appUserCubit,
-    required BuildContext context,
-    required GoRouterState state,
-  }) {
+  @override
+  String? redirect(BuildContext context, GoRouterState state) {
     final location = state.uri.path;
-    final isLoggedIn = appUserCubit.isLoggedIn;
-    final isAuthRoute = _authRoutes.contains(location);
+    final isLoggedIn = _appUserCubit.isLoggedIn;
+    final isGuestOnlyRoute = guestOnlyRoutes.contains(location);
 
-    if (!isLoggedIn && !isAuthRoute) {
+    if (!isLoggedIn && !isGuestOnlyRoute) {
       return AuthRoutes.signIn;
     }
 
-    if (isLoggedIn && isAuthRoute) {
+    if (isLoggedIn && isGuestOnlyRoute) {
       return AppRoutes.home;
     }
 
