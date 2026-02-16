@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../core/di/di_container.dart';
+import '../core/router/app_feature_router.dart';
 import '../core/theme/theme.dart';
 import '../core/utils/snack_bar_utils.dart';
 import '../features/auth/presentation/bloc/auth_bloc.dart';
+import '../features/auth/routes/auth_router.dart';
 import 'app_router.dart';
 import 'state/app_user_cubit/app_user_cubit.dart';
 
@@ -22,8 +24,16 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
+    _buildRouter();
+  }
+
+  void _buildRouter() {
     _appUserCubit = diContainer<AppUserCubit>();
-    _appRouter = AppRouter(_appUserCubit);
+    final featureRouters = <AppFeatureRouter>[AuthRouter(_appUserCubit)];
+    _appRouter = AppRouter(
+      appUserCubit: _appUserCubit,
+      featureRouters: featureRouters,
+    );
   }
 
   @override
