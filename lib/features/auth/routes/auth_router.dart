@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/app_routes.dart';
@@ -25,12 +24,14 @@ class AuthRouter {
     AuthRoutes.signUp,
   ];
 
-  static String? redirect(BuildContext context, GoRouterState state) {
-    final location = state.matchedLocation;
-    final isAuthRoute = _authRoutes.contains(location);
-
-    final appUserCubit = context.read<AppUserCubit>();
+  static String? redirect({
+    required AppUserCubit appUserCubit,
+    required BuildContext context,
+    required GoRouterState state,
+  }) {
+    final location = state.uri.path;
     final isLoggedIn = appUserCubit.state is UserLoggedIn;
+    final isAuthRoute = _authRoutes.contains(location);
 
     if (!isLoggedIn && !isAuthRoute) {
       return AuthRoutes.signIn;

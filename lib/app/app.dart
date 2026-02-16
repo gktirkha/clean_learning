@@ -22,7 +22,7 @@ class App extends StatelessWidget {
           create: (_) =>
               diContainer<AuthBloc>()..add(const AuthEvent.isLoggedIn()),
         ),
-        BlocProvider.value(value: appUserCubit),
+        BlocProvider<AppUserCubit>.value(value: appUserCubit),
       ],
       child: MaterialApp.router(
         scaffoldMessengerKey: scaffoldKey,

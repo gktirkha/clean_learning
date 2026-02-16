@@ -15,7 +15,11 @@ class AppRouter {
   final AppUserCubit appUserCubit;
 
   late final RedirectManager _redirectManager = RedirectManager([
-    AuthRouter.redirect,
+    (context, state) => AuthRouter.redirect(
+      appUserCubit: appUserCubit,
+      state: state,
+      context: context,
+    ),
   ]);
 
   late final GoRouter router = GoRouter(
