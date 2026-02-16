@@ -8,26 +8,38 @@ import '../features/auth/presentation/bloc/auth_bloc.dart';
 import 'app_router.dart';
 import 'state/app_user_cubit/app_user_cubit.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final appUserCubit = diContainer<AppUserCubit>();
-    final appRouter = AppRouter(appUserCubit);
+  State<App> createState() => _AppState();
+}
 
+class _AppState extends State<App> {
+  late final AppUserCubit _appUserCubit;
+  late final AppRouter _appRouter;
+
+  @override
+  void initState() {
+    super.initState();
+    _appUserCubit = diContainer<AppUserCubit>();
+    _appRouter = AppRouter(_appUserCubit);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (_) => diContainer<AuthBloc>()..add(const .checkLogin()),
         ),
-        BlocProvider<AppUserCubit>.value(value: appUserCubit),
+        BlocProvider<AppUserCubit>.value(value: _appUserCubit),
       ],
       child: MaterialApp.router(
         scaffoldMessengerKey: scaffoldKey,
         theme: AppTheme.darkTheme,
         debugShowCheckedModeBanner: false,
-        routerConfig: appRouter.router,
+        routerConfig: _appRouter.router,
       ),
     );
   }
